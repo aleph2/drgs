@@ -25,6 +25,19 @@
         </div>
         
         <div id="main">
+            <ul id="adminMenu">
+                <li class="${request.controller == 'Admin' ? 'selected' : ''}">
+                    <a href="@{Admin.index()}">My posts</a>
+                </li>
+                #{secure.check 'admin'}
+                    <li class="${request.controller == 'Posts' ? 'selected' : ''}">
+                        <a href="@{Posts.list()}">Posts</a>
+                    </li>
+                    <li class="${request.controller == 'Users' ? 'selected' : ''}">
+                        <a href="@{Users.list()}">Users</a>
+                    </li>
+                #{/secure.check}
+            </ul>
             #{doLayout /} 
         </div>
         

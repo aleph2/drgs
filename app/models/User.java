@@ -16,21 +16,26 @@ public class User extends Model {
 	@Required
     public String email;
     @Required
-	public String password;
+	private String password;
     public String fullname;
     public boolean isAdmin;
     
     public User(String email, String password, String fullname) {
         this.email = email;
-        this.password = password;
+        this.password = Codec.hexMD5(password);
         this.fullname = fullname;
     }
     
     public static User connect(String email, String password) {
-        return find("byEmailAndPassword", email, password).first();
+        return find("byEmailAndPassword", email, Codec.hexMD5(password)).first();
     }
     
-    public String toString() {
+    
+    public void setPassword(String password) {
+		this.password = Codec.hexMD5(password);
+	}
+
+	public String toString() {
     	return email;
     	
     }
